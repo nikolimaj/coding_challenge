@@ -33,7 +33,7 @@ function DataTableMant() {
 
 
   const getCSV = () => {
-    Papa.parse("genes.csv", {
+    Papa.parse("genes_human_f.csv", {
       header: true,
       download: true,
       skipEmptyLines: true,

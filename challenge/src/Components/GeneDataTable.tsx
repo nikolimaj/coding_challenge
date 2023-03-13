@@ -25,22 +25,20 @@ function GeneTable() {
   
   const [values, setValues] = useState<Data | undefined>();
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize]=useState(PAGE_SIZE);
-  const [records, setRecords] = useState(values?.data.slice(0, pageSize));
+  const [records, setRecords] = useState(values?.data.slice(0, PAGE_SIZE));
   const [load, setLoad] = useState<boolean>(true)
 
   useEffect(() => {
     getCSV();
     setLoad(false);
-    const from = (page - 1) * pageSize;
-    const to = from + pageSize;
+    const from = (page - 1) * PAGE_SIZE;
+    const to = from + PAGE_SIZE;
     setRecords(values?.data.slice(from, to));
-  }, [page, values]);
+  }, [page, PAGE_SIZE, values]);
 
   
-  
   const getCSV = () => {
-    Papa.parse("/genes.csv", {
+    Papa.parse("/genes_human.csv", {
       header: true,
       download: true,
       skipEmptyLines: true,
@@ -75,12 +73,12 @@ function GeneTable() {
         console.log(gene.name);
        }}
        totalRecords={values?.data.length}
-       recordsPerPage={pageSize}
+       recordsPerPage={PAGE_SIZE}
        page={page}
        onPageChange={(p) => setPage(p)}
        idAccessor='ensembl'
        fetching={load}
-       minHeight={150}
+       //minHeight={150}
       />
     </div>
   )
