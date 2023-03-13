@@ -1,0 +1,20 @@
+ensembl;gene_symbol;name;biotype;chromosome;start;end
+ENSG00000250577;;;Linc R N A;4;138923930;138924232
+ENSG00000171657;GPR82;"G protein-coupled receptor 82 [Source:HGNC Symbol;Acc:HGNC:4533]";Protein Coding;X;41724155;41730135
+ENSG00000249877;;;Linc R N A;4;189288677;189291336
+ENSG00000164604;GPR85;"G protein-coupled receptor 85 [Source:HGNC Symbol;Acc:HGNC:4536]";Protein Coding;7;113078331;113087778
+ENSG00000181656;GPR88;"G protein-coupled receptor 88 [Source:HGNC Symbol;Acc:HGNC:4539]";Protein Coding;1;100538137;100542018
+ENSG00000270702;;;Processed Pseudogene;15;41718370;41718672
+ENSG00000170412;GPRC5C;"G protein-coupled receptor class C group 5 member C [Source:HGNC Symbol;Acc:HGNC:13309]";Protein Coding;17;74424851;74451653
+ENSG00000132522;GPS2;"G protein pathway suppressor 2 [Source:HGNC Symbol;Acc:HGNC:4550]";Protein Coding;17;7311324;7315564
+ENSG00000236919;;;Unprocessed Pseudogene;11;50246554;50247761
+ENSG00000248015;;;Antisense;19;1392170;1396467
+ENSG00000278110;;;Unprocessed Pseudogene;22;18623339;18625289
+ENSG00000167701;GPT;"glutamic--pyruvic transaminase [Source:HGNC Symbol;Acc:HGNC:4552]";Protein Coding;8;144502973;144507174
+ENSG00000253180;;;Processed Pseudogene;8;99003407;99003842
+ENSG00000233276;GPX1;"glutathione peroxidase 1 [Source:HGNC Symbol;Acc:HGNC:4553]";Protein Coding;3;49357176;49358600
+ENSG00000197582;GPX1P1;"glutathione peroxidase pseudogene 1 [Source:HGNC Symbol;Acc:HGNC:4560]";Processed Pseudogene;X;13378735;13379340
+ENSG00000228225;;;Processed Pseudogene;2;84031140;84032358
+ENSG00000260051;;;Antisense;16;1451760;1452653
+ENSG00000282827;;"ATR interacting protein [Source:EntrezGene;Acc:84126]";Protein Coding;3;48446710;48467645
+ENSG00000237586;;;Processed Pseudogene;8;124301315;124301804
