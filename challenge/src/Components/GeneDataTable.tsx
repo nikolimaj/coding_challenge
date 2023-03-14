@@ -1,6 +1,4 @@
-import React from 'react';
 import Papa, { ParseResult } from "papaparse";
-import { Text } from '@mantine/core';
 import { DataTable } from 'mantine-datatable';
 import { useState, useEffect } from 'react';
 
@@ -19,14 +17,20 @@ type Data = {
   data: Gene[]
 }
 
+type GeneProps={
+  setChosenGene: (chosenGene:string) => void;
+}
 
-function GeneTable() {
+
+function GeneTable({setChosenGene}:GeneProps) {
   const PAGE_SIZE = 10;
   
   const [values, setValues] = useState<Data | undefined>();
   const [page, setPage] = useState(1);
   const [records, setRecords] = useState(values?.data.slice(0, PAGE_SIZE));
   const [load, setLoad] = useState<boolean>(true)
+  //const [chosenGene, setChosenGene]=useState<string>()
+
 
   useEffect(() => {
     getCSV();
@@ -70,7 +74,7 @@ function GeneTable() {
         ]
        }
        onRowClick={(gene:Gene)=>{
-        console.log(gene.name);
+        setChosenGene(gene.ensembl);
        }}
        totalRecords={values?.data.length}
        recordsPerPage={PAGE_SIZE}
