@@ -5,41 +5,23 @@ import { Gene } from '../App';
 
 
 export interface props {
-  chosenGene:Gene|undefined
+  chosenGene: Gene | undefined
 }
 
-function PieChart({chosenGene} : props) {
+function PieChart({ chosenGene }: props) {
   const [load, setLoad] = useState<boolean>(true)
-  const [gc, setGC] = useState<number>(0)
-
-  const getData = () => new Promise<number>((resolve) => {
-    setLoad(true);
-    fetch('https://rest.ensembl.org/ga4gh/features/' + chosenGene?.ensembl + '.1?content-type=application/json')
-      .then(res => res.json())
-      .then(res => {
-        resolve(+res.attributes.vals["gene gc"][0])
-      })
-      .catch(() => {
-        resolve(-1)
-      })
-      .finally(() => {
-        setLoad(false)
-      })
-  });
 
   useEffect(() => {
-    getData()
-      .then(gc => {
-        setGC(gc)
-      })
-  }, [chosenGene])
+    setLoad(false)
+  }, []);
+
 
   var chart;
-  if (gc > 0) {
+  if (chosenGene?.gc && chosenGene.gc && chosenGene.gc > 0) {
     chart =
       <Plot
         data={[{
-          values: [gc, 100 - gc],
+          values: [chosenGene.gc, 100 - chosenGene.gc],
           labels: ['GC', 'AT'],
           type: 'pie'
         }]}
@@ -52,7 +34,7 @@ function PieChart({chosenGene} : props) {
     <div>
       {load ?
         <Loader />
-        : ((gc > 0) ? <h1> {JSON.stringify(gc)}</h1> : <h1>-</h1>)}
+        : ((chosenGene?.gc && chosenGene.gc && chosenGene.gc > 0) ? <h1> {JSON.stringify(chosenGene.gc)}</h1> : <h1>-</h1>)}
       {!load && chart}
     </div>
   )

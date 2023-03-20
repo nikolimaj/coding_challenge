@@ -33,7 +33,7 @@ const getCSV = () => new Promise<Data>((resolve) => {
 
 function App() {
   const [geneData, setGeneData] = useState<Data>({ data: [] });
-  const [chosenGene, setChosenGene]=useState<Gene>();
+  const [chosenGene, setChosenGene] = useState<Gene>();
 
   useEffect(() => {
     getCSV()
@@ -43,13 +43,9 @@ function App() {
   }, [])
 
   return (
-    // <Grid>
-    //   <Grid.Col span={8}><GeneDataTable data= {values} setChosenGene = {setChosenGene} /></Grid.Col>
-    //   <Grid.Col span={4}><PieChart chosenGene={chosenGene} /></Grid.Col>
-    // </Grid>
     <Grid>
-      <Grid.Col span={8}><GeneDataTable setChosenGene={setChosenGene} geneData={geneData}/></Grid.Col>
-      <Grid.Col span={4}><PieChart chosenGene={chosenGene}/></Grid.Col>
+      <Grid.Col span={8}><GeneDataTable setChosenGene={setChosenGene} geneData={geneData} /></Grid.Col>
+      <Grid.Col span={4}><PieChart chosenGene={chosenGene} /></Grid.Col>
     </Grid>
   );
 }

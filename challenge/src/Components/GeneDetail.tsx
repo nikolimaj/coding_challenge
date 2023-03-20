@@ -2,7 +2,14 @@ import { Center, Group, LoadingOverlay, Stack, Text } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import { Gene } from '../App';
 
-function GeneDetail({ detail }: { detail: Gene }) {
+
+
+type GeneProps = {
+    setChosenGene: (chosenGene: Gene) => void;
+    detail: Gene;
+  }
+
+function GeneDetail({ setChosenGene, detail }: GeneProps) {
     const [loading, setLoading] = useState(true);
     useEffect(() => {
         setLoading(true);
@@ -17,11 +24,13 @@ function GeneDetail({ detail }: { detail: Gene }) {
                                 detail.strand = res.strand
                             }
                             setLoading(false)
+                            setChosenGene(detail)
                         })
                 })
         }
         else {
             setLoading(false)
+            setChosenGene(detail)
         }
     }, [detail]);
 
