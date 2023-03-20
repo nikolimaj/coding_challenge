@@ -1,57 +1,28 @@
 import Papa, { ParseResult } from "papaparse";
 import { DataTable } from 'mantine-datatable';
 import { useState, useEffect } from 'react';
+import { Data, Gene } from "../App";
 
-
-type Gene = {
-  ensembl: string
-  gene_symbol: string
-  name: string
-  biotype: string
-  chromosome: string
-  start: number
-  end: number
-}
-
-type Data = {
-  data: Gene[]
-}
 
 type GeneProps={
-  setChosenGene: (chosenGene:string) => void;
+  setChosenGene: (chosenGene:Gene) => void;
+  geneData:Data;
 }
 
-
-function GeneTable({setChosenGene}:GeneProps) {
+function GeneTable({setChosenGene, geneData}:GeneProps) {
   const PAGE_SIZE = 10;
   
   const [values, setValues] = useState<Data | undefined>();
   const [page, setPage] = useState(1);
   const [records, setRecords] = useState(values?.data.slice(0, PAGE_SIZE));
-  const [load, setLoad] = useState<boolean>(true)
   //const [chosenGene, setChosenGene]=useState<string>()
 
 
   useEffect(() => {
-    getCSV();
-    setLoad(false);
     const from = (page - 1) * PAGE_SIZE;
     const to = from + PAGE_SIZE;
-    setRecords(values?.data.slice(from, to));
+    setValues(geneData);
   }, [page, PAGE_SIZE, values]);
-
-  
-  const getCSV = () => {
-    Papa.parse("/genes_human.csv", {
-      header: true,
-      download: true,
-      skipEmptyLines: true,
-      delimiter: ";",
-      complete: (results: Data) => {
-        setValues(results)
-      },
-    })
-  }
 
   return (
     <div>
@@ -74,14 +45,14 @@ function GeneTable({setChosenGene}:GeneProps) {
         ]
        }
        onRowClick={(gene:Gene)=>{
-        setChosenGene(gene.ensembl);
+        setChosenGene(gene);
        }}
        totalRecords={values?.data.length}
        recordsPerPage={PAGE_SIZE}
        page={page}
        onPageChange={(p) => setPage(p)}
        idAccessor='ensembl'
-       fetching={load}
+       //fetching={load}
        //minHeight={150}
       />
     </div>
