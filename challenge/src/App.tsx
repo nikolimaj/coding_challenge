@@ -14,14 +14,11 @@ export interface Gene {
   start: number;
   end: number;
   gc: number;
-  lagacy_biotype: string;
   strand: string;
 }
-
 export interface Data {
   data: Gene[];
 }
-
 const getCSV = () => new Promise<Data>((resolve) => {
   Papa.parse("/genes_human.csv", {
     header: true,
@@ -33,7 +30,6 @@ const getCSV = () => new Promise<Data>((resolve) => {
     },
   })
 });
-
 
 function App() {
   const [geneData, setGeneData] = useState<Data>({ data: [] });
@@ -47,6 +43,10 @@ function App() {
   }, [])
 
   return (
+    // <Grid>
+    //   <Grid.Col span={8}><GeneDataTable data= {values} setChosenGene = {setChosenGene} /></Grid.Col>
+    //   <Grid.Col span={4}><PieChart chosenGene={chosenGene} /></Grid.Col>
+    // </Grid>
     <Grid>
       <Grid.Col span={8}><GeneDataTable setChosenGene={setChosenGene} geneData={geneData}/></Grid.Col>
       <Grid.Col span={4}><PieChart chosenGene={chosenGene}/></Grid.Col>
