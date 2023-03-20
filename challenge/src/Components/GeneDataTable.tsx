@@ -4,16 +4,16 @@ import { Data, Gene } from "../App";
 import GeneDetail from './GeneDetail';
 
 
-type GeneProps={
-  setChosenGene: (chosenGene:Gene) => void;
-  geneData:Data;
+type GeneProps = {
+  setChosenGene: (chosenGene: Gene) => void;
+  geneData: Data;
 }
 
-function GeneTable({setChosenGene, geneData}:GeneProps) {
-  const PAGE_SIZE = 10;
+function GeneTable({ setChosenGene, geneData }: GeneProps) {
+  const PAGE_SIZE = 15;
   const [page, setPage] = useState(1);
   const [records, setRecords] = useState(geneData?.data.slice(0, PAGE_SIZE));
-  
+
   useEffect(() => {
     const from = (page - 1) * PAGE_SIZE;
     const to = from + PAGE_SIZE;
@@ -40,17 +40,14 @@ function GeneTable({setChosenGene, geneData}:GeneProps) {
             { accessor: 'end' },
           ]
         }
-        onRowClick={(gene: Gene) => {
-          setChosenGene(gene);
-        }}
         totalRecords={geneData?.data.length}
         recordsPerPage={PAGE_SIZE}
         page={page}
         onPageChange={(p) => setPage(p)}
         idAccessor='ensembl'
-        //fetching={load}
         rowExpansion={{
-          content: ({ record }) => <GeneDetail detail={record}></GeneDetail>
+          content: ({ record }) => (<GeneDetail setChosenGene={setChosenGene} detail={record}></GeneDetail>),
+           
         }}
       //minHeight={150}
       />
