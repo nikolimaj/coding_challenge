@@ -4,21 +4,17 @@ import Plot from 'react-plotly.js';
 import { Gene } from '../App';
 
 
-type PieChartProps = {
-  chosenGene: Gene;
+export interface props {
+  chosenGene:Gene|undefined
 }
 
-type Data = {
-  gc: number
-}
-
-function PieChart({ chosenGene }: PieChartProps) {
+function PieChart({chosenGene} : props) {
   const [load, setLoad] = useState<boolean>(true)
   const [gc, setGC] = useState<number>(0)
 
   const getData = () => new Promise<number>((resolve) => {
     setLoad(true);
-    fetch('https://rest.ensembl.org/ga4gh/features/' + chosenGene + '.1?content-type=application/json')
+    fetch('https://rest.ensembl.org/ga4gh/features/' + chosenGene?.ensembl + '.1?content-type=application/json')
       .then(res => res.json())
       .then(res => {
         resolve(+res.attributes.vals["gene gc"][0])
