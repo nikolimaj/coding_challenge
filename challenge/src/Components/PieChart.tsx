@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Loader } from '@mantine/core';
 import Plot from 'react-plotly.js';
+import { Gene } from '../App';
 
 
 type PieChartProps = {
-  chosenGene: string;
+  chosenGene: Gene;
 }
 
 type Data = {
