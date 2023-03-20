@@ -1,60 +1,59 @@
 import { useState, useEffect } from 'react';
 import { Loader } from '@mantine/core';
 import Plot from 'react-plotly.js';
+import { Gene } from '../App';
 
 
-type PieChartProps={
-    chosenGene:string;
+export interface props {
+  chosenGene:Gene|undefined
 }
 
-type Data={
-  gc:number
-}
-
-function PieChart({chosenGene}:PieChartProps) {
-
-  const [geneData, setGeneData] = useState<Data>()
+function PieChart({chosenGene} : props) {
   const [load, setLoad] = useState<boolean>(true)
-  const [gc, setGC] = useState<number>(geneData?geneData.gc:0)
-  const [at, setAT] = useState<number>(geneData?(100-geneData.gc):0)
+  const [gc, setGC] = useState<number>(0)
 
-  function getData() {
+  const getData = () => new Promise<number>((resolve) => {
     setLoad(true);
-    return fetch('https://rest.ensembl.org/ga4gh/features/' + chosenGene + '.1?content-type=application/json')
-    .then(res=>res.json())
-    .then(res=>{
-      setGeneData(res.attributes.vals["gene gc"])
-    })
-    .catch(()=>{
-      setGeneData({gc:-1})
-    })
-    .finally(()=>{
-      setLoad(false)
-      setGC(geneData? geneData.gc:0);
-      setAT(100-gc);
-    })
+    fetch('https://rest.ensembl.org/ga4gh/features/' + chosenGene?.ensembl + '.1?content-type=application/json')
+      .then(res => res.json())
+      .then(res => {
+        resolve(+res.attributes.vals["gene gc"][0])
+      })
+      .catch(() => {
+        resolve(-1)
+      })
+      .finally(() => {
+        setLoad(false)
+      })
+  });
+
+  useEffect(() => {
+    getData()
+      .then(gc => {
+        setGC(gc)
+      })
+  }, [chosenGene])
+
+  var chart;
+  if (gc > 0) {
+    chart =
+      <Plot
+        data={[{
+          values: [gc, 100 - gc],
+          labels: ['GC', 'AT'],
+          type: 'pie'
+        }]}
+        layout={{ height: 400, width: 500, title: 'GC-Anteil' }} />
   }
-
-  useEffect(()=>{
-    getData();
-  },[chosenGene])
-
+  else {
+    chart = <p>No data available for this Gene</p>
+  }
   return (
     <div>
-      {load?<Loader/>:JSON.stringify(geneData)}
-      {/* {JSON.stringify(geneData)} */}
-      <h1>
-      {JSON.stringify(geneData?.gc)}
-      </h1>
-      <Plot
-      data = {[{
-        values: [gc, at],
-        //values: [41.85, (100-41.85)],
-        labels: ['GC', 'AT'],
-        type: 'pie'
-      }]}
-        layout={ {height: 400, width: 500, title: 'GC-Anteil'} }
-      />
+      {load ?
+        <Loader />
+        : ((gc > 0) ? <h1> {JSON.stringify(gc)}</h1> : <h1>-</h1>)}
+      {!load && chart}
     </div>
   )
 }
